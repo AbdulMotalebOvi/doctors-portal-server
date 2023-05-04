@@ -199,14 +199,8 @@ async function run() {
 
         // BookingCollection api
 
-        app.get('/booking', verifyJwt, async (req, res) => {
+        app.get('/booking', async (req, res) => {
             const email = req.query.email;
-            const decodedEmail = req.decoded.email;
-
-            if (email !== decodedEmail) {
-                return res.status(403).send({ message: 'forbidden access' });
-            }
-
             const query = { email: email }
             const bookings = await bookedCollection.find(query).toArray()
             res.send(bookings)
